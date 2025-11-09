@@ -50,7 +50,7 @@ export default function Home() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 <a href="/" className="flex items-center gap-2">
                   <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/App%20logo1-484avml67aUc7NUJfgLacdhWkW0liv.jpg"
+                    src="/logo.jpg"
                     alt="InvenTek 3D Logo"
                     width={40}
                     height={40}
@@ -208,19 +208,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Floating 3D Cube Illustration */}
-          <div className="relative h-80 flex items-center justify-center animate-float">
-            <div className="relative w-64 h-64">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/App%20logo1-484avml67aUc7NUJfgLacdhWkW0liv.jpg"
-                alt="3D Cube"
-                width={256}
-                height={256}
-                className="w-full h-full object-contain filter drop-shadow-2xl"
-              />
-            </div>
-          </div>
-
           <div className="flex justify-center mt-8 animate-bounce">
             <ChevronDown className="w-8 h-8 text-purple-600" />
           </div>
@@ -337,7 +324,7 @@ export default function Home() {
             <div className="relative h-96 flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl opacity-10" />
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/App%20logo1-484avml67aUc7NUJfgLacdhWkW0liv.jpg"
+                src="/logo.jpg"
                 alt="InvenTek 3D"
                 width={300}
                 height={300}

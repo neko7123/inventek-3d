@@ -87,7 +87,7 @@ export default function Shop() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                       <a href="/" className="flex items-center gap-2">
                         <Image
-                          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/App%20logo1-484avml67aUc7NUJfgLacdhWkW0liv.jpg"
+                          src="/logo.jpg"
                           alt="InvenTek 3D Logo"
                           width={40}
                           height={40}
