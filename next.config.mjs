@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  output: 'export', // ✅ Enables static site generation (replaces `next export`)
   images: {
-    unoptimized: true,
+    unoptimized: true, // ✅ Important for Firebase Hosting (no dynamic image optimization)
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

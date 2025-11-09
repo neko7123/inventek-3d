@@ -34,13 +34,13 @@ interface Application {
 }
 
 export default function CareerManagement() {
-  const [activeTab, setActiveTab] = useState<"jobs" | "applications">("jobs")
   const [showJobModal, setShowJobModal] = useState(false)
   const [showAppModal, setShowAppModal] = useState(false)
   const [applications, setApplications] = useState<Application[]>([])
   const [internships, setInternships] = useState<JobPosting[]>([]);
   const [jobs, setJobs] = useState<JobPosting[]>([]);
   const [showInternshipModal, setShowInternshipModal] = useState(false)
+  const [activeTab, setActiveTab] = useState<"jobs" | "internships" | "applications">("jobs")
 
 
   const exportCSV = (data: any[], filename: string) => {
@@ -117,7 +117,7 @@ export default function CareerManagement() {
         }
       };
 
-      const getStatusColor = (status: string) => {
+      const getStatusColor = (status?: string) => {
         switch (status) {
           case "Active":
             return "bg-green-500/20 text-green-300";
@@ -132,9 +132,9 @@ export default function CareerManagement() {
           default:
             return "bg-gray-500/20 text-gray-300";
         }
-      }
+      };
 
-      const handleAddInternship = async (newInternship: JobPosting) => {
+      const handleAddInternship = async (newInternship: Omit<JobPosting, "id">) => {
         try {
           // Generate the next internship ID (e.g., ITEKI001, ITEKI002)
           const newId = `ITEKI${String(internships.length + 1).padStart(3, "0")}`;
@@ -226,14 +226,14 @@ export default function CareerManagement() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button
+                      <button aria-label="edit job"
                         onClick={() => console.log("Edit job:", job.id)}
                         className="p-2 hover:bg-gray-700 rounded transition-all"
                       >
                         <Edit2 size={18} className="text-blue-400" />
                       </button>
 
-                      <button
+                      <button aria-label="Delete job"
                         onClick={() => handleDeleteJob(job.id)}
                         className="p-2 hover:bg-gray-700 rounded transition-all"
                       >
@@ -316,14 +316,14 @@ export default function CareerManagement() {
                           </div>
 
                           <div className="flex gap-2">
-                            <button
+                            <button aria-label="edit internship"
                               onClick={() => console.log("Edit internship:", intern.id)}
                               className="p-2 hover:bg-gray-700 rounded transition-all"
                             >
                               <Edit2 size={18} className="text-blue-400" />
                             </button>
 
-                            <button
+                            <button aria-label="Delete internship"
                               onClick={() => handleDeleteInternship(intern.id)}
                               className="p-2 hover:bg-gray-700 rounded transition-all"
                             >
@@ -412,7 +412,11 @@ export default function CareerManagement() {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-400">{app.dateApplied}</td>
                       <td className="px-6 py-4">
-                        <button className="p-2 hover:bg-gray-600 rounded transition-all">
+                        <button
+                          className="p-2 hover:bg-gray-600 rounded transition-all"
+                          aria-label="View application details"
+                          title="View application details"
+                        >
                           <Eye size={18} className="text-blue-400" />
                         </button>
                       </td>
@@ -481,20 +485,44 @@ export default function CareerManagement() {
               }}
               className="space-y-4"
             >
-              <div>
-                <label className="block text-sm text-gray-300 mb-1">Job Title</label>
-                <input name="title" required className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" />
-              </div>
+            <div>
+              <label
+                htmlFor="title"
+                className="block text-sm text-gray-300 mb-1"
+              >
+                Job Title
+              </label>
+
+              <input
+                id="title"
+                name="title"
+                required
+                placeholder="Enter the job title"
+                title="Job title"
+                className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
+              />
+            </div>
+
 
               <div>
-                <label className="block text-sm text-gray-300 mb-1">Description</label>
+                <label
+                  htmlFor="description"
+                  className="block text-sm text-gray-300 mb-1"
+                >
+                  Description
+                </label>
+
                 <textarea
+                  id="description"
                   name="description"
                   required
                   rows={3}
+                  placeholder="Enter a short job or internship description"
+                  title="Job or Internship description"
                   className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
                 />
               </div>
+
 
               <div>
                 <label className="block text-sm text-gray-300 mb-1">Duration</label>
@@ -522,13 +550,25 @@ export default function CareerManagement() {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-300 mb-1">Status</label>
-                <select name="status" className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700">
+                <label
+                  htmlFor="status"
+                  className="block text-sm text-gray-300 mb-1"
+                >
+                  Status
+                </label>
+
+                <select
+                  id="status"
+                  name="status"
+                  className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
+                  title="Select status"   // 👈 extra accessibility boost
+                >
                   <option value="Active">Active</option>
                   <option value="Archived">Archived</option>
                   <option value="Under Review">Under Review</option>
                 </select>
               </div>
+
 
               <button
                 type="submit"
@@ -579,19 +619,37 @@ export default function CareerManagement() {
                 className="space-y-4"
               >
                 <div>
-                  <label className="block text-sm text-gray-300 mb-1">Internship Title</label>
-                  <input name="title" required className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" />
+                  <label htmlFor="title" className="block text-sm text-gray-300 mb-1">
+                    Internship Title
+                  </label>
+                  <input
+                    id="title"
+                    name="title"
+                    required
+                    placeholder="Enter internship title"
+                    className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
+                  />
                 </div>
-
+                
                 <div>
                   <label className="block text-sm text-gray-300 mb-1">Specialization</label>
                   <input name="specialization" placeholder="SolidWorks, CAD, etc." className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" />
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-300 mb-1">Description</label>
-                  <textarea name="description" required rows={3} className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" />
+                  <label htmlFor="description" className="block text-sm text-gray-300 mb-1">
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    required
+                    rows={3}
+                    placeholder="Enter job or internship description"
+                    className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
+                  />
                 </div>
+
 
                 <div>
                   <label className="block text-sm text-gray-300 mb-1">Duration</label>
@@ -618,14 +676,20 @@ export default function CareerManagement() {
                   <input name="applyLink" placeholder="https://..." className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700" />
                 </div>
 
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">Status</label>
-                  <select name="status" className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700">
-                    <option value="Active">Active</option>
-                    <option value="Archived">Archived</option>
-                    <option value="Under Review">Under Review</option>
-                  </select>
-                </div>
+                    <div>
+                      <label htmlFor="status" className="block text-sm text-gray-300 mb-1">
+                        Status
+                      </label>
+                      <select
+                        id="status"
+                        name="status"
+                        className="w-full p-2 rounded bg-gray-800 text-white border border-gray-700"
+                      >
+                        <option value="Active">Active</option>
+                        <option value="Archived">Archived</option>
+                        <option value="Under Review">Under Review</option>
+                      </select>
+                    </div>
 
                 <button
                   type="submit"

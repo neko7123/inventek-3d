@@ -34,6 +34,7 @@ export default function CertificateManagement() {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [newCert, setNewCert] = useState({
+    certificateID: "",
     candidateName: "",
     courseWorkshop: "",
     issueDate: "",
@@ -42,6 +43,7 @@ export default function CertificateManagement() {
     lifetime: false,
     performanceScore: 0,
   });
+
 
   // 🔥 Live Firestore listener
   useEffect(() => {
@@ -102,6 +104,7 @@ export default function CertificateManagement() {
       }
 
       setNewCert({
+        certificateID: "", // ✅ added to match the state structure
         candidateName: "",
         courseWorkshop: "",
         issueDate: "",
@@ -110,6 +113,7 @@ export default function CertificateManagement() {
         lifetime: false,
         performanceScore: 0,
       });
+
       setShowModal(false);
       setEditId(null);
     } catch (err) {
@@ -155,14 +159,15 @@ export default function CertificateManagement() {
     setEditId(cert.id);
     setShowModal(true);
     setNewCert({
-      candidateName: cert.candidateName,
-      courseWorkshop: cert.courseWorkshop,
-      issueDate: cert.issueDate,
-      completionDate: cert.completionDate,
-      expiryDate: cert.expiryDate || "",
-      lifetime: cert.lifetime,
-      performanceScore: cert.performanceScore,
-    });
+    certificateID: cert.certificateID || "", // ✅ added this line
+    candidateName: cert.candidateName,
+    courseWorkshop: cert.courseWorkshop,
+    issueDate: cert.issueDate,
+    completionDate: cert.completionDate,
+    expiryDate: cert.expiryDate || "",
+    lifetime: cert.lifetime,
+    performanceScore: cert.performanceScore,
+  });
   };
 
   const exportCSV = () => {
@@ -257,7 +262,7 @@ export default function CertificateManagement() {
           {/* Certificate ID */}
           <div>
             <label className="block text-sm text-gray-300 mb-1">Certificate ID</label>
-            <input
+            <input aria-label="certificate ID"
               type="text"
               value={newCert.certificateID || "Will be auto-generated"}
               readOnly
@@ -283,7 +288,7 @@ export default function CertificateManagement() {
           {/* Course / Workshop */}
           <div>
             <label className="block text-sm text-gray-300 mb-1">Course / Workshop</label>
-            <select
+            <select aria-label="course"
               value={newCert.courseWorkshop}
               onChange={(e) =>
                 setNewCert({ ...newCert, courseWorkshop: e.target.value })
@@ -301,7 +306,7 @@ export default function CertificateManagement() {
           {/* Issue Date */}
           <div>
             <label className="block text-sm text-gray-300 mb-1">Issue Date</label>
-            <input
+            <input aria-label="issue date"
               type="date"
               value={newCert.issueDate}
               onChange={(e) =>
@@ -315,7 +320,7 @@ export default function CertificateManagement() {
           {/* Completion Date */}
           <div>
             <label className="block text-sm text-gray-300 mb-1">Completion Date</label>
-            <input
+            <input aria-label="date"
               type="date"
               value={newCert.completionDate}
               onChange={(e) =>
@@ -328,7 +333,7 @@ export default function CertificateManagement() {
 
           {/* Lifetime Checkbox */}
           <div className="flex items-center gap-2">
-            <input
+            <input aria-label="lifetime"
               type="checkbox"
               checked={newCert.lifetime}
               onChange={(e) =>
@@ -343,7 +348,7 @@ export default function CertificateManagement() {
           {!newCert.lifetime && (
             <div>
               <label className="block text-sm text-gray-300 mb-1">Expiry Date</label>
-              <input
+              <input aria-label="date job"
                 type="date"
                 value={newCert.expiryDate}
                 onChange={(e) =>
@@ -436,10 +441,10 @@ export default function CertificateManagement() {
                       <span className={`text-xs px-2 py-1 rounded ${status.color}`}>{status.status}</span>
                     </td>
                     <td className="px-6 py-4 flex gap-2">
-                      <button className="p-2 hover:bg-gray-600 rounded transition-all">
+                      <button aria-label="edit" className="p-2 hover:bg-gray-600 rounded transition-all">
                         <Edit2 size={18} className="text-blue-400" />
                       </button>
-                      <button
+                      <button aria-label="delete"
                         onClick={() => deleteCertificate(cert.id)}
                         className="p-2 hover:bg-gray-600 rounded transition-all"
                       >
