@@ -33,20 +33,20 @@ export default function ContactPage() {
 
   const founders = [
     {
-      name: "Rahul Sharma",
-      position: "Co-Founder & CEO",
-      specialization: "3D Printing Technology & Business Strategy",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-      linkedin: "https://linkedin.com/in/rahulsharma",
-      description: "Visionary leader with 8+ years in additive manufacturing and sustainable innovation.",
+      name: "Rohit Solanki",
+      position: "Founder & CEO",
+      specialization: "Mechanical Engineering (CAD Design, 3D Printing Technology, Material Science & Business Strategy)",
+      image: "/rohitsolanki.jpg",
+      linkedin: "https://www.linkedin.com/in/rohit-solanki-4125082aa",
+      description: "Visionary leader with skills in additive manufacturing, CAD design and sustainable innovation.",
     },
     {
-      name: "Priya Verma",
+      name: "Sairaj Shinde",
       position: "Co-Founder & CTO",
-      specialization: "CAD Design & Material Science",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
-      linkedin: "https://linkedin.com/in/priyaverma",
-      description: "Tech innovator specializing in advanced CAD systems and eco-friendly materials development.",
+      specialization: "Mechanical Engineering (AIML Automation, Web Development & CAD Design",
+      image: "/sairajshinde.png",
+      linkedin: "https://www.linkedin.com/in/sairaj-shinde2003",
+      description: "Tech innovator specializing in AIML automation, Web Development and advanced CAD systems.",
     },
   ]
 
@@ -54,44 +54,30 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      value: "hello@inventek3d.com",
-      link: "mailto:hello@inventek3d.com",
+      value: "inventek3d@gmail.com",
+      link: "mailto:inventek3d@gmail.com",
       color: "from-blue-500 to-blue-600",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 98765 43210",
-      link: "tel:+919876543210",
+      value: "+91 88306 22940",
+      link: "tel:+918830622940",
       color: "from-green-500 to-green-600",
     },
     {
       icon: Linkedin,
       title: "LinkedIn",
       value: "InvenTek 3D",
-      link: "https://linkedin.com/company/inventek3d",
+      link: "#",
       color: "from-blue-700 to-blue-800",
     },
     {
       icon: Instagram,
       title: "Instagram",
       value: "@inventek3d",
-      link: "https://instagram.com/inventek3d",
-      color: "from-pink-500 to-purple-600",
-    },
-    {
-      icon: Facebook,
-      title: "Facebook",
-      value: "InvenTek 3D",
-      link: "https://facebook.com/inventek3d",
-      color: "from-blue-600 to-blue-700",
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: "Bangalore, India",
       link: "#",
-      color: "from-red-500 to-red-600",
+      color: "from-pink-500 to-purple-600",
     },
   ]
 
@@ -358,7 +344,7 @@ export default function ContactPage() {
       <section className="py-20 bg-gradient-to-b from-purple-50 via-white to-purple-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">Visit Our Office</h2>
-          <p className="text-center text-gray-600 mb-16 text-lg">Located in Bangalore's thriving tech ecosystem</p>
+          <p className="text-center text-gray-600 mb-16 text-lg">Located in Mumbai</p>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -367,7 +353,7 @@ export default function ContactPage() {
                   <MapPin className="w-full h-full text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Our Office</h3>
-                <p className="text-gray-600 font-medium">123 Innovation Street, Bangalore - 560001, India</p>
+                <p className="text-gray-600 font-medium">Mumbai, India</p>
               </div>
 
               <div className="group p-8 bg-white rounded-2xl border-2 border-purple-100 hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:shadow-purple-200 hover:-translate-y-2 cursor-pointer">
@@ -395,7 +381,7 @@ export default function ContactPage() {
                   <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition transform">
                     <MapPin className="w-10 h-10 text-white" />
                   </div>
-                  <p className="text-2xl font-bold mb-2">Bangalore, India</p>
+                  <p className="text-2xl font-bold mb-2">Mumbai, India</p>
                   <p className="text-lg opacity-90">India's Tech Innovation Hub</p>
                   <p className="text-sm opacity-75 mt-4">Building the future of sustainable manufacturing</p>
                 </div>
@@ -421,14 +407,14 @@ export default function ContactPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:hello@inventek3d.com"
+              href="mailto:inventek3d@gmail.com"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-100 transition transform hover:scale-105 shadow-xl"
             >
               <Mail className="w-5 h-5" />
               Send Us an Email
             </a>
             <a
-              href="tel:+919876543210"
+              href="tel:+918830622940"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-full font-bold hover:bg-white/30 transition border-2 border-white/50"
             >
               <Phone className="w-5 h-5" />
@@ -500,18 +486,13 @@ export default function ContactPage() {
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="https://linkedin.com/company/inventek3d" className="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="https://instagram.com/inventek3d" className="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Instagram
-                  </a>
-                </li>
-                <li>
-                  <a href="https://facebook.com/inventek3d" className="hover:text-white transition">
-                    Facebook
                   </a>
                 </li>
                 <li>

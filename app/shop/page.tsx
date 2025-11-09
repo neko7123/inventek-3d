@@ -38,30 +38,34 @@ export default function Shop() {
     {
       id: 1,
       name: "Custom 3D Print",
-      price: 599,
+      price: 499,
       image: "/3d-printed-custom-miniature-figure.jpg",
       category: "Customized",
+      description: "Share your product idea, and we’ll design a custom 3D model and print it in your chosen material",
     },
     {
       id: 2,
       name: "3D Printing",
-      price: 449,
+      price: 299,
       image: "/3d-printed-phone-stand.png",
       category: "Printing",
+      description: "Share your 3D model and we'll print it in your chosen material",
     },
     {
       id: 3,
       name: "Eco-Printing",
-      price: 799,
+      price: 199,
       image: "/3d-printed-desk-organizer.jpg",
       category: "Sustainability",
+      description: "Bring us your plastic bottles—we’ll recycle them into filament and 3D print your custom design at no extra filament cost",
     },
     {
       id: 4,
       name: "CAD/CAE Service",
-      price: 1499,
+      price: 999,
       image: "/3d-printed-architecture-model.jpg",
       category: "Special Service",
+      description: "Have a product idea that needs a 3D model or CAE testing? We’ll handle it for you!",
     },
   ]
 
@@ -210,41 +214,49 @@ export default function Shop() {
           <p className="text-xl text-gray-600 mb-2">
             Discover amazing 3D printed products crafted with precision and innovation
           </p>
-          <p className="text-lg text-purple-600 font-semibold">All items custom-made with eco-friendly materials</p>
+          <p className="text-lg text-purple-600 font-semibold">Prices may vary by request. Our team will confirm your order within 24 hours.</p>
         </div>
       </section>
 
       {/* Products Grid Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
             {products.map((product) => (
-              <div
-                key={product.id}
-                className="group bg-white rounded-2xl border border-purple-100 overflow-hidden hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:shadow-purple-200 hover:scale-105"
-              >
-                {/* Product Image */}
-                <div className="relative h-64 bg-gradient-to-br from-purple-50 to-white overflow-hidden">
-                  <Image
-                    src={product.image || "/placeholder.svg"}
-                    alt={product.name}
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                    {product.category}
-                  </div>
+            <div
+              key={product.id}
+              className="group bg-white rounded-2xl border border-purple-100 overflow-hidden hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:shadow-purple-200 hover:scale-105 flex flex-col"
+            >
+              {/* Product Image */}
+              <div className="relative h-64 bg-gradient-to-br from-purple-50 to-white overflow-hidden">
+                <Image
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute top-2 right-2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                  {product.category}
+                </div>
+              </div>
+
+              {/* Product Info */}
+              <div className="flex flex-col flex-grow p-4">
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-3 min-h-[48px]">
+                    {product.description}
+                  </p>
                 </div>
 
-                {/* Product Info */}
-                <div className="p-4">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-purple-600">₹{product.price.toLocaleString()}</span>
-                  </div>
+                <div className="mt-auto">
+                  <span className="text-2xl font-bold text-purple-600 block mb-3">
+                    ₹{product.price.toLocaleString()}
+                  </span>
 
-                  {/* Order Now Button */}
                   <button
                     onClick={() => setSelectedProduct(product)}
                     className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
@@ -254,6 +266,8 @@ export default function Shop() {
                   </button>
                 </div>
               </div>
+            </div>
+
             ))}
           </div>
         </div>
@@ -351,8 +365,8 @@ export default function Shop() {
             <div>
               <h4 className="font-bold text-lg mb-4">Contact</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>Email: shop@inventek3d.com</li>
-                <li>Phone: +91 (XXX) XXX-XXXX</li>
+                <li>Email: inventek3d@gmail.con</li>
+                <li>Phone: +91 88306 22940</li>
                 <li>Follow us on social media</li>
               </ul>
             </div>

@@ -92,11 +92,22 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
       </button>
     </div>
 
-        <form onSubmit={handleSubmit} className="p-8">
+     {/* Google Form Embed */}
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSdVw-4o4ZCajd6FAEJyUkNMNu-uONnU0M_z7bRstv-kPoKocA/viewform?embedded=true"
+            title="InvenTek 3D Order Form"
+            className="w-full h-[80vh] border-0 rounded-b-2xl"
+          >
+            Loading…
+          </iframe>
+
+        {/* Future: restore your internal form here */}
+
+        {/* <form onSubmit={handleSubmit} className="p-8">
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left Column - Main Form */}
+
             <div className="lg:col-span-2 space-y-6">
-              {/* Product & Quantity */}
+
               <div className="bg-purple-50 p-6 rounded-lg">
                 <div className="flex justify-between items-start mb-4">
                   <div>
@@ -133,7 +144,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
                 </div>
               </div>
 
-              {/* Personal Information */}
+
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -181,7 +192,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
                 </div>
               </div>
 
-              {/* Shipping Address */}
+
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <Truck className="w-5 h-5 text-purple-600" />
@@ -263,7 +274,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
                 </div>
               </div>
 
-              {/* Special Instructions */}
+
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Special Instructions (Optional)
@@ -278,7 +289,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
                 />
               </div>
 
-              {/* Payment Method */}
+
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-purple-600" />
@@ -311,7 +322,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
               </div>
             </div>
 
-            {/* Right Column - Order Summary */}
+
             <div className="lg:col-span-1">
               <div className="sticky top-32 bg-purple-50 p-6 rounded-2xl border border-purple-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h3>
@@ -372,7 +383,7 @@ export default function OrderForm({ product, onClose }: OrderFormProps) {
               </div>
             </div>
           </div>
-        </form>
+        </form> */}
       </div>
     </div>
   )

@@ -1,168 +1,148 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { Search, Download, CheckCircle, XCircle, Menu, X } from "lucide-react"
-import jsPDF from "jspdf"
+import { useState } from "react";
+import Image from "next/image";
+import { Search, Download, CheckCircle, XCircle, Menu, X } from "lucide-react";
+import jsPDF from "jspdf";
+import { db } from "@/lib/firebase";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 
-// Static certificate database
-const certificateDatabase: Record<
-  string,
-  {
-    id: string
-    name: string
-    course: string
-    issueDate: string
-    expiryDate: string
-    status: "valid" | "invalid"
-    score: number
-    completionDate: string
-  }
-> = {
-  ITEK001CER001: {
-    id: "ITEK001CER001",
-    name: "Aisha Khan",
-    course: "Mechanical Design Engineer Intern - SolidWorks",
-    issueDate: "2024-10-15",
-    expiryDate: "2025-10-15",
-    status: "valid",
-    score: 92,
-    completionDate: "2024-10-10",
-  },
-  ITEK002CER002: {
-    id: "ITEK002CER002",
-    name: "Rajesh Patel",
-    course: "Mechanical Design Engineer Intern - Inventor",
-    issueDate: "2024-09-20",
-    expiryDate: "2025-09-20",
-    status: "valid",
-    score: 88,
-    completionDate: "2024-09-15",
-  },
-  ITEK003CER003: {
-    id: "ITEK003CER003",
-    name: "Priya Sharma",
-    course: "Mechanical Design Engineer Intern - FUSION 360",
-    issueDate: "2024-08-05",
-    expiryDate: "2025-08-05",
-    status: "valid",
-    score: 95,
-    completionDate: "2024-08-01",
-  },
-  ITEK001CER004: {
-    id: "ITEK001CER004",
-    name: "Marco Rodriguez",
-    course: "Mechanical Design Engineer Intern - SolidWorks",
-    issueDate: "2023-06-10",
-    expiryDate: "2024-06-10",
-    status: "invalid",
-    score: 0,
-    completionDate: "2023-06-05",
-  },
-}
+// helper for date formatting
+const formatDate = (ts?: Timestamp | null) =>
+  ts ? ts.toDate().toISOString().split("T")[0] : "N/A";
 
 export default function VerifyCertificate() {
-  const [certificateId, setCertificateId] = useState("")
-  const [verificationResult, setVerificationResult] = useState<(typeof certificateDatabase)[string] | null>(null)
-  const [isSearching, setIsSearching] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [certificateId, setCertificateId] = useState("");
+  const [verificationResult, setVerificationResult] = useState<any>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleVerify = () => {
-    if (!certificateId.trim()) {
-      alert("Please enter a certificate ID")
-      return
-    }
+  const handleNavClick = () => setIsMenuOpen(false);
 
-    setIsSearching(true)
-    setTimeout(() => {
-      const result = certificateDatabase[certificateId.toUpperCase()]
-      if (result) {
-        setVerificationResult(result)
-      } else {
-        setVerificationResult({
-          id: certificateId,
-          name: "N/A",
-          course: "N/A",
-          issueDate: "N/A",
-          expiryDate: "N/A",
-          status: "invalid",
-          score: 0,
-          completionDate: "N/A",
-        })
-      }
-      setIsSearching(false)
-    }, 600)
+  const handleVerify = async () => {
+  if (!certificateId.trim()) {
+    alert("Please enter a certificate ID");
+    return;
   }
 
-  const handleNavClick = () => {
-    setIsMenuOpen(false);
-  };
-  
+  setIsSearching(true);
+  const id = certificateId.trim().toUpperCase();
+
+  try {
+    const snap = await getDoc(doc(db, "certificates", id));
+
+    if (snap.exists()) {
+      const data = snap.data();
+      setVerificationResult({
+        id,
+        name: data.candidateName || "N/A",
+        course: data.courseWorkshop || "N/A",
+        issueDate: formatDate(data.issueDate),
+        expiryDate: data.lifetime
+          ? "Lifetime"
+          : formatDate(data.expiryDate ?? null),
+        status: data.status || "valid",
+        score: data.performanceScore || 0,
+        completionDate: formatDate(data.completionDate),
+      });
+    } else {
+      setVerificationResult({
+        id,
+        name: "N/A",
+        course: "N/A",
+        issueDate: "N/A",
+        expiryDate: "N/A",
+        status: "invalid",
+        score: 0,
+        completionDate: "N/A",
+      });
+    }
+  } catch (err) {
+    console.error("Error verifying certificate:", err);
+    alert("Error verifying certificate. Try again later.");
+  } finally {
+    setIsSearching(false);
+  }
+};
+
+
   const handleDownloadPDF = () => {
-    if (!verificationResult) return
+    if (!verificationResult) return;
 
-    const doc = new jsPDF()
-    const pageWidth = doc.internal.pageSize.getWidth()
-    const pageHeight = doc.internal.pageSize.getHeight()
+    const docx = new jsPDF();
+    const pageWidth = docx.internal.pageSize.getWidth();
+    const pageHeight = docx.internal.pageSize.getHeight();
 
-    // Background color
-    doc.setFillColor(139, 92, 246)
-    doc.rect(0, 0, pageWidth, 40, "F")
+    docx.setFillColor(139, 92, 246);
+    docx.rect(0, 0, pageWidth, 40, "F");
 
-    // Title
-    doc.setTextColor(255, 255, 255)
-    doc.setFontSize(24)
-    doc.text("Certificate Verification Report", pageWidth / 2, 25, { align: "center" })
+    docx.setTextColor(255, 255, 255);
+    docx.setFontSize(24);
+    docx.text("Certificate Verification Report", pageWidth / 2, 25, {
+      align: "center",
+    });
 
-    // Reset text color
-    doc.setTextColor(0, 0, 0)
+    docx.setTextColor(0, 0, 0);
+    docx.setFontSize(14);
+    docx.setFont("Noto Sans", "bold");
+    docx.text("Verification Status", 20, 60);
 
-    // Verification Status
-    doc.setFontSize(14)
-    doc.setFont(undefined, "bold")
-    doc.text("Verification Status", 20, 60)
+    docx.setFontSize(12);
+    docx.setFont("Noto Sans", "normal");
+    const statusText =
+      verificationResult.status === "valid" ? "✓ VERIFIED" : "✗ INVALID";
+    const statusColor: [number, number, number] =
+      verificationResult.status === "valid"
+        ? [34, 197, 94]
+        : [239, 68, 68];
 
-    doc.setFontSize(12)
-    doc.setFont(undefined, "normal")
-    const statusText = verificationResult.status === "valid" ? "✓ VERIFIED" : "✗ INVALID"
-    const statusColor = verificationResult.status === "valid" ? [34, 197, 94] : [239, 68, 68]
-    doc.setTextColor(...statusColor)
-    doc.text(statusText, 20, 70)
+    docx.setTextColor(...statusColor);
+    docx.text(statusText, 20, 70);
+    docx.setTextColor(0, 0, 0);
 
-    doc.setTextColor(0, 0, 0)
+    docx.setFontSize(14);
+    docx.setFont("Noto Sans", "bold");
+    docx.text("Certificate Details", 20, 90);
 
-    // Certificate Details
-    doc.setFontSize(14)
-    doc.setFont(undefined, "bold")
-    doc.text("Certificate Details", 20, 90)
-
-    doc.setFontSize(11)
-    doc.setFont(undefined, "normal")
+    docx.setFontSize(11);
+    docx.setFont("Noto Sans", "normal");
     const details = [
       `Certificate ID: ${verificationResult.id}`,
       `Name: ${verificationResult.name}`,
       `Course/Workshop: ${verificationResult.course}`,
       `Issue Date: ${verificationResult.issueDate}`,
-      `Expiry Date: ${verificationResult.expiryDate}`,
+      `Expiry Date: ${
+        verificationResult.expiryDate === "Lifetime"
+          ? "Lifetime (No Expiry)"
+          : verificationResult.expiryDate
+      }`,
       `Completion Date: ${verificationResult.completionDate}`,
-      ...(verificationResult.status === "valid" ? [`Performance Score: ${verificationResult.score}%`] : []),
-    ]
+      ...(verificationResult.status === "valid"
+        ? [`Performance Score: ${verificationResult.score}%`]
+        : []),
+    ];
 
-    let yPosition = 100
+    let yPosition = 100;
     details.forEach((detail) => {
-      doc.text(detail, 20, yPosition)
-      yPosition += 8
-    })
+      docx.text(detail, 20, yPosition);
+      yPosition += 8;
+    });
 
-    // Footer
-    doc.setFontSize(10)
-    doc.setTextColor(128, 128, 128)
-    doc.text("This is an automated verification report from InvenTek 3D", 20, pageHeight - 20)
-    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, pageHeight - 14)
+    docx.setFontSize(10);
+    docx.setTextColor(128, 128, 128);
+    docx.text(
+      "This is an automated verification report from InvenTek 3D",
+      20,
+      pageHeight - 20
+    );
+    docx.text(
+      `Generated on: ${new Date().toLocaleDateString()}`,
+      20,
+      pageHeight - 14
+    );
 
-    doc.save(`Certificate_Verification_${verificationResult.id}.pdf`)
-  }
+    docx.save(`Certificate_Verification_${verificationResult.id}.pdf`);
+  };
 
   return (
     <div className="relative w-full overflow-hidden bg-white">
@@ -180,7 +160,7 @@ export default function VerifyCertificate() {
                         <span className="text-xl font-bold text-purple-900">InvenTek 3D</span>
                       </a>
                       <div className="hidden md:flex items-center gap-8">
-                        <a href="/" className="text-purple-600 font-semibold">
+                        <a href="/" className="text-gray-700 hover:text-purple-600 transition">
                           Home
                         </a>
                         <a href="/#services" className="text-gray-700 hover:text-purple-600 transition">
@@ -198,7 +178,7 @@ export default function VerifyCertificate() {
                         <a href="/shop" className="text-gray-700 hover:text-purple-600 transition">
                           Shop
                         </a>
-                        <a href="/verify-certificate" className="text-gray-700 hover:text-purple-600 transition">
+                        <a href="/verify-certificate" className="text-purple-600 font-semibold">
                           Verify Certificate
                         </a>
                         <a href="/contact" className="text-gray-700 hover:text-purple-600 transition">
@@ -243,7 +223,7 @@ export default function VerifyCertificate() {
                           </a>
                           <a
                             href="/#sdg"
-                            onClick={handleNavClick}
+                            onClick={handleNavClick}  
                             className="block px-4 py-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition"
                           >
                             Impact
@@ -313,7 +293,7 @@ export default function VerifyCertificate() {
               </button>
             </div>
             <p className="text-sm text-gray-500 mt-4">
-              📝 Try: ITEK001CER001, ITEK002CER002, ITEK003CER003, or ITEK001CER004
+              📝 Try: ITEK001CER001
             </p>
           </div>
 
@@ -491,11 +471,7 @@ export default function VerifyCertificate() {
             <div>
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white transition">
-                    Email
-                  </a>
-                </li>
+                
                 <li>
                   <a href="#" className="hover:text-white transition">
                     LinkedIn
@@ -503,7 +479,12 @@ export default function VerifyCertificate() {
                 </li>
                 <li>
                   <a href="#" className="hover:text-white transition">
-                    Twitter
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:inventek3d@gmail.com" className="hover:text-white transition">
+                    Email
                   </a>
                 </li>
               </ul>

@@ -1,86 +1,63 @@
 "use client"
 
-import type React from "react"
+import { X } from "lucide-react"
 
-import { useState } from "react"
-import { X, Upload } from "lucide-react"
-
-interface InternshipFormProps {
-  internshipId: string
+interface ApplicationFormProps {
+  id: string
+  type: "internship" | "job"
+  applyLink?: string
   onClose: () => void
 }
 
-export default function InternshipForm({ internshipId, onClose }: InternshipFormProps) {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    linkedIn: "",
-    github: "",
-    college: "",
-    currentYear: "",
-    cgpa: "",
-    experience: "",
-    resume: null as File | null,
-    coverLetter: "",
-    expectations: "",
-  })
-
-  const [resumeFileName, setResumeFileName] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setFormData((prev) => ({ ...prev, resume: file }))
-      setResumeFileName(file.name)
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Simulate form submission
-    console.log("Form submitted:", formData)
-
-    // Show success message
-    setTimeout(() => {
-      alert(`Application submitted successfully for internship ${internshipId}!`)
-      setIsSubmitting(false)
-      onClose()
-    }, 1500)
-  }
-
+export default function ApplicationForm({ id, type, applyLink, onClose }: ApplicationFormProps) {
   return (
-   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-  {/* Scrollable container */}
-  <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative">
-    
-    {/* Header */}
-    <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-purple-500 text-white px-8 py-6 rounded-t-2xl flex items-center justify-between z-10">
-      <div>
-        <h2 className="text-2xl font-bold">Apply for Internship</h2>
-        <p className="text-purple-100 mt-1">ID: {internshipId}</p>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden relative">
+        
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-purple-500 text-white px-8 py-6 rounded-t-2xl flex items-center justify-between z-10">
+          <div>
+            <h2 className="text-2xl font-bold">
+              Apply for {type === "job" ? "Job" : "Internship"}
+            </h2>
+            <p className="text-purple-100 mt-1">ID: {id}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-purple-700 rounded-lg transition"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Dynamic Form */}
+        {applyLink ? (
+            <iframe
+              src={applyLink}
+              title={`Application form for ${type === "job" ? "Job" : "Internship"} ${id}`}
+              className="w-full h-[80vh] border-0"
+              allow="camera; microphone; fullscreen"
+              loading="lazy"
+            />
+        ) : (
+          <div className="flex flex-col items-center justify-center h-[70vh] text-gray-600">
+            <p className="text-lg font-semibold mb-3">
+              No application form available yet.
+            </p>
+            <p className="text-sm text-gray-500">
+              Please check back later or contact our team for more info.
+            </p>
+          </div>
+        )}
       </div>
-      <button
-        onClick={onClose}
-        className="p-2 hover:bg-purple-700 rounded-lg transition"
-        aria-label="Close"
-      >
-        <X className="w-6 h-6" />
-      </button>
     </div>
+  )
+}
 
-
+         {/* Future: restore your own form here */}
         {/* Form Content */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6 bg-white">
-          {/* Personal Information Section */}
+        {/* <form onSubmit={handleSubmit} className="p-8 space-y-6 bg-white">
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -149,8 +126,6 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
               </div>
             </div>
           </div>
-
-          {/* Education Section */}
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -201,8 +176,6 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
               </div>
             </div>
           </div>
-
-          {/* Experience & Skills Section */}
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -222,8 +195,6 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
               />
             </div>
           </div>
-
-          {/* Resume Section */}
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -254,8 +225,6 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
               </div>
             </div>
           </div>
-
-          {/* Expectations Section */}
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <span className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm">
@@ -276,7 +245,6 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
             />
           </div>
 
-          {/* Submit Button */}
           <div className="flex gap-4 pt-4 sticky bottom-0 bg-white border-t border-gray-200 -mx-8 px-8 py-6">
         <button
           type="button"
@@ -293,8 +261,4 @@ export default function InternshipForm({ internshipId, onClose }: InternshipForm
           {isSubmitting ? "Submitting..." : "Submit Application"}
             </button>
           </div>
-        </form>
-      </div>
-    </div>
-  )
-}
+        </form> */}

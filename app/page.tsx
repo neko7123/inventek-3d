@@ -452,10 +452,10 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="/career" className="hover:text-white transition">
+                  <a href="/careers" className="hover:text-white transition">
                     Education
                   </a>
-                </li>
+                </li>   
                 <li>
                   <a href="/shop" className="hover:text-white transition">
                     Cloud Printing
@@ -498,11 +498,6 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 <li>
                   <a href="#" className="hover:text-white transition">
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>
@@ -512,7 +507,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="mailto:inventek3d@gmail.com" className="hover:text-white transition">
                     Email
                   </a>
                 </li>
