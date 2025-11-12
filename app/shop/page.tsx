@@ -365,7 +365,7 @@ export default function Shop() {
             <div>
               <h4 className="font-bold text-lg mb-4">Contact</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>Email: inventek3d@gmail.con</li>
+                <li>Email: info@inventek3d.com</li>
                 <li>Phone: +91 88306 22940</li>
                 <li>Follow us on social media</li>
               </ul>

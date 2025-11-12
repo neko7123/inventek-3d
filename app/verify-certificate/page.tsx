@@ -473,17 +473,17 @@ export default function VerifyCertificate() {
               <ul className="space-y-2 text-gray-400">
                 
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:inventek3d@gmail.com" className="hover:text-white transition">
+                  <a href="mailto:info@inventek3d.com" className="hover:text-white transition">
                     Email
                   </a>
                 </li>

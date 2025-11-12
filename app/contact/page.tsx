@@ -54,8 +54,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      value: "inventek3d@gmail.com",
-      link: "mailto:inventek3d@gmail.com",
+      value: "info@inventek3d.com",
+      link: "mailto:info@inventek3d.com",
       color: "from-blue-500 to-blue-600",
     },
     {
@@ -69,14 +69,14 @@ export default function ContactPage() {
       icon: Linkedin,
       title: "LinkedIn",
       value: "InvenTek 3D",
-      link: "#",
+      link: "www.linkedin.com/in/inventek-3d-6a7962391",
       color: "from-blue-700 to-blue-800",
     },
     {
       icon: Instagram,
       title: "Instagram",
       value: "@inventek3d",
-      link: "#",
+      link: "https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==",
       color: "from-pink-500 to-purple-600",
     },
   ]
@@ -407,7 +407,7 @@ export default function ContactPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:inventek3d@gmail.com"
+              href="mailto:info@inventek3d.com"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-purple-600 rounded-full font-bold hover:bg-gray-100 transition transform hover:scale-105 shadow-xl"
             >
               <Mail className="w-5 h-5" />
@@ -486,17 +486,17 @@ export default function ContactPage() {
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition">
+                  <a href="https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:hello@inventek3d.com" className="hover:text-white transition">
+                  <a href="mailto:info@inventek3d.com" className="hover:text-white transition">
                     Email
                   </a>
                 </li>
