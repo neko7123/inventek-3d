@@ -4,6 +4,15 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Mail, Phone, Linkedin, Instagram, Facebook, MapPin, ExternalLink, Menu, X, ArrowRight } from "lucide-react"
 
+interface Founder {
+  name: string
+  position: string
+  specialization: string
+  image: string
+  linkedin: string
+  description: string
+}
+
 export default function ContactPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [scrollY, setScrollY] = useState(0)
@@ -31,24 +40,18 @@ export default function ContactPage() {
     setIsMenuOpen(false)
   }
 
-  const founders = [
-    {
-      name: "Rohit Solanki",
-      position: "Founder & CEO",
-      specialization: "Mechanical Engineering (CAD Design, 3D Printing Technology, Material Science & Business Strategy)",
-      image: "/rohitsolanki.jpg",
-      linkedin: "https://www.linkedin.com/in/rohit-solanki-4125082aa",
-      description: "Visionary leader with skills in additive manufacturing, CAD design and sustainable innovation.",
-    },
-    {
-      name: "Sairaj Shinde",
-      position: "Co-Founder & CTO",
-      specialization: "Mechanical Engineering (AIML Automation, Web Development & CAD Design",
-      image: "/sairajshinde.png",
-      linkedin: "https://www.linkedin.com/in/sairaj-shinde2003",
-      description: "Tech innovator specializing in AIML automation, Web Development and advanced CAD systems.",
-    },
-  ]
+  const founders: Founder[] = [
+  {
+    name: "Rohit Solanki",
+    position: "Founder & CEO",
+    specialization:
+      "Mechanical Engineering (CAD Design, 3D Printing Technology, Material Science & Business Strategy)",
+    image: "/rohitsolanki.jpg",
+    linkedin: "https://www.linkedin.com/in/rohit-solanki-4125082aa",
+    description:
+      "Visionary leader with skills in additive manufacturing, CAD design and sustainable innovation.",
+  },
+]
 
   const contactOptions = [
     {
@@ -281,7 +284,7 @@ export default function ContactPage() {
 
       <section className="py-20 bg-gradient-to-b from-white to-purple-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">Meet Our Visionary Founders</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">Meet Our Visionary Founder</h2>
           <p className="text-center text-gray-600 mb-16 text-lg">
             Industry veterans driving innovation in sustainable 3D printing
           </p>
@@ -299,7 +302,7 @@ export default function ContactPage() {
                   <div className="relative h-96 overflow-hidden rounded-3xl border-4 border-purple-200 group-hover:border-purple-600 transition-all duration-300 shadow-xl group-hover:shadow-2xl group-hover:shadow-purple-300">
                     <Image
                       src={founder.image || "/placeholder.svg"}
-                      alt={founder.name}
+                      alt={founder.name ?? "Founder photo"}
                       width={400}
                       height={400}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -311,7 +314,7 @@ export default function ContactPage() {
 
                     {/* Floating badge */}
                     <div className="absolute top-4 right-4 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75">
-                      {founder.position.split("&")[0].trim()}
+                      {(founder.position ?? "").split("&")[0].trim()}
                     </div>
                   </div>
                 </div>
