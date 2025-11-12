@@ -659,7 +659,7 @@ useEffect(() => {
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
+                  <a href="https://www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>

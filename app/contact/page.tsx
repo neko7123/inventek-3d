@@ -69,7 +69,7 @@ export default function ContactPage() {
       icon: Linkedin,
       title: "LinkedIn",
       value: "InvenTek 3D",
-      link: "www.linkedin.com/in/inventek-3d-6a7962391",
+      link: "https://www.linkedin.com/in/inventek-3d-6a7962391",
       color: "from-blue-700 to-blue-800",
     },
     {
@@ -486,7 +486,7 @@ export default function ContactPage() {
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
+                  <a href="https://www.linkedin.com/in/inventek-3d-6a7962391" className="hover:text-white transition">
                     LinkedIn
                   </a>
                 </li>
