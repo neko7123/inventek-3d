@@ -8,8 +8,13 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'InvenTek 3D',
-  description: 'Webpage of InvenTek 3D',
+  description: '3D Printing | CAD | Cloud Manufacturing',
   generator: 'Sairaj Shinde',
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
