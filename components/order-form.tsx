@@ -5,17 +5,19 @@ import type React from "react"
 import { useState } from "react"
 import { X, Truck, CreditCard } from "lucide-react"
 
-interface Product {
-  id: number
+export interface OrderProductType {
+  id: string
   name: string
   price: number
-  category: string
+  description?: string
+  category?: string
+  imageUrl?: string
 }
 
-interface OrderFormProps {
-  product: Product
-  onClose: () => void
-}
+  interface OrderFormProps {
+    product: OrderProductType
+    onClose: () => void
+  }
 
 export default function OrderForm({ product, onClose }: OrderFormProps) {
   const [formData, setFormData] = useState({

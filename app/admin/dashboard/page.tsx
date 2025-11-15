@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react"
 import { db } from "@/lib/firebase"
 import { collection, getDocs } from "firebase/firestore"
-import { Briefcase, Clock, AlertCircle, Award } from "lucide-react"
+import { Award, Briefcase, Clock, AlertCircle, ShoppingCart, Package } from "lucide-react";
+import { onSnapshot } from "firebase/firestore";
 
 export default function AdminDashboard() {
   const [jobs, setJobs] = useState<any[]>([])
@@ -11,6 +12,14 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [certificates, setCertificates] = useState<any[]>([])
+  const [products, setProducts] = useState<any[]>([]);
+
+    useEffect(() => {
+      const unsub = onSnapshot(collection(db, "products"), (snap) => {
+        setProducts(snap.docs.map((d) => d.data()));
+      });
+      return () => unsub();
+    }, []);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -101,6 +110,35 @@ export default function AdminDashboard() {
                 </div>
               </div>
               <p className="text-xs text-gray-500">Combined count of all active listings</p>
+            </div>
+  {/* Active Products */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-gray-400 text-sm font-medium mb-1">Active Products</p>
+                  <p className="text-4xl font-bold text-white">
+                    {products.filter((p) => p.status === "Active").length}
+                  </p>
+                </div>
+                <div className="bg-gradient-to-br from-pink-500 to-pink-600 p-3 rounded-lg">
+                  <ShoppingCart size={24} className="text-white" />
+                </div>
+              </div>
+              <p className="text-xs text-gray-500">Products currently available in shop</p>
+            </div>
+
+            {/* Total Orders */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-gray-400 text-sm font-medium mb-1">Total Orders</p>
+                  <p className="text-4xl font-bold text-white">0</p>
+                </div>
+                <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-3 rounded-lg">
+                  <Package size={24} className="text-white" />
+                </div>
+              </div>
+              <p className="text-xs text-gray-500">Orders received from the shop</p>
             </div>
           </div>
 

@@ -4,70 +4,73 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { ShoppingCart, Menu, X } from "lucide-react"
 import OrderForm from "@/components/order-form"
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore"
+import { db } from "@/lib/firebase"
 
 export default function Shop() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [scrollY, setScrollY] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<(typeof products)[0] | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [products, setProducts] = useState<Product[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    interface Product {
+      id: string
+      name: string
+      description?: string
+      price: number
+      category: string
+      imageUrl?: string
+      status?: string
     }
 
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
 
-    window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("scroll", handleScroll)
+    // 1) Mouse effects
+    useEffect(() => {
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePosition({ x: e.clientX, y: e.clientY })
+      }
 
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      const handleScroll = () => {
+        setScrollY(window.scrollY)
+      }
+
+      window.addEventListener("mousemove", handleMouseMove)
+      window.addEventListener("scroll", handleScroll)
+
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove)
+        window.removeEventListener("scroll", handleScroll)
+      }
+    }, [])
+
+    // 2) Firestore listener
+    useEffect(() => {
+      const q = query(collection(db, "products"), orderBy("createdAt", "desc"))
+
+      const unsub = onSnapshot(q, (snap) => {
+        const list = snap.docs.map((doc) => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            name: data.name,
+            description: data.description || "",
+            price: data.price || 0,
+            category: data.category || "",
+            imageUrl: data.imageUrl || "/placeholder.svg",
+            status: data.status || "Inactive",
+          } as Product
+        })
+
+        setProducts(list)
+      })
+
+      return () => unsub()
+    }, [])
 
   const handleNavClick = () => {
     setIsMenuOpen(false)
   }
-
-  const products = [
-    {
-      id: 1,
-      name: "Custom 3D Print",
-      price: 499,
-      image: "/3d-printed-custom-miniature-figure.jpg",
-      category: "Customized",
-      description: "Share your product idea, and we’ll design a custom 3D model and print it in your chosen material",
-    },
-    {
-      id: 2,
-      name: "3D Printing",
-      price: 299,
-      image: "/3d-printed-phone-stand.png",
-      category: "Printing",
-      description: "Share your 3D model and we'll print it in your chosen material",
-    },
-    {
-      id: 3,
-      name: "Eco-Printing",
-      price: 199,
-      image: "/3d-printed-desk-organizer.jpg",
-      category: "Sustainability",
-      description: "Bring us your plastic bottles—we’ll recycle them into filament and 3D print your custom design at no extra filament cost",
-    },
-    {
-      id: 4,
-      name: "CAD/CAE Service",
-      price: 999,
-      image: "/3d-printed-architecture-model.jpg",
-      category: "Special Service",
-      description: "Have a product idea that needs a 3D model or CAE testing? We’ll handle it for you!",
-    },
-  ]
 
   return (
     <div ref={containerRef} className="relative w-full overflow-hidden bg-white">
@@ -230,7 +233,7 @@ export default function Shop() {
               {/* Product Image */}
               <div className="relative h-64 bg-gradient-to-br from-purple-50 to-white overflow-hidden">
                 <Image
-                  src={product.image || "/placeholder.svg"}
+                  src={product.imageUrl || "/placeholder.svg"}
                   alt={product.name}
                   width={300}
                   height={300}
@@ -257,13 +260,18 @@ export default function Shop() {
                     ₹{product.price.toLocaleString()}
                   </span>
 
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
-                  >
-                    <ShoppingCart className="w-5 h-5 group-hover/btn:scale-110 transition" />
-                    Order Now
-                  </button>
+                    {product.status === "Active" ? (
+                      <button
+                        onClick={() => setSelectedProduct(product)}
+                        className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-all duration-300 flex items-center justify-center gap-2"
+                      >
+                        <ShoppingCart className="w-5 h-5" /> Order Now
+                      </button>
+                    ) : (
+                      <div className="w-full py-3 rounded-lg bg-gray-300 text-gray-600 font-semibold text-center">
+                        {product.status === "Out of stock" ? "Out of Stock" : "Unavailable"}
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
