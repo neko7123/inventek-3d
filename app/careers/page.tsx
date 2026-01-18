@@ -664,7 +664,7 @@ useEffect(() => {
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
+                  <a href="https://www.instagram.com/inventek3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
                     Instagram
                   </a>
                 </li>

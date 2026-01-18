@@ -64,8 +64,8 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 88306 22940",
-      link: "tel:+918830622940",
+      value: "+919021602719",
+      link: "tel:+919021602719",
       color: "from-green-500 to-green-600",
     },
     {
@@ -79,7 +79,7 @@ export default function ContactPage() {
       icon: Instagram,
       title: "Instagram",
       value: "@inventek3d",
-      link: "https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==",
+      link: "https://www.instagram.com/inventek3d?igsh=MTFzem55MmNzYWJuZQ==",
       color: "from-pink-500 to-purple-600",
     },
   ]
@@ -494,7 +494,7 @@ export default function ContactPage() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/inventek_3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
+                  <a href="https://www.instagram.com/inventek3d?igsh=MTFzem55MmNzYWJuZQ==" className="hover:text-white transition">
                     Instagram
                   </a>
                 </li>
