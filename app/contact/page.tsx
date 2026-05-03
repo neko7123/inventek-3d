@@ -40,19 +40,6 @@ export default function ContactPage() {
     setIsMenuOpen(false)
   }
 
-  const founders: Founder[] = [
-  {
-    name: "Rohit Solanki",
-    position: "Founder & CEO",
-    specialization:
-      "Mechanical Engineering (CAD Design, 3D Printing Technology, Material Science & Business Strategy)",
-    image: "/rohitsolanki.jpg",
-    linkedin: "https://www.linkedin.com/in/rohit-solanki-4125082aa",
-    description:
-      "Visionary leader with skills in additive manufacturing, CAD design and sustainable innovation.",
-  },
-]
-
   const contactOptions = [
     {
       icon: Mail,
@@ -277,68 +264,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gradient-to-b from-white to-purple-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">Meet Our Visionary Founder</h2>
-          <p className="text-center text-gray-600 mb-16 text-lg">
-            Industry veterans driving innovation in sustainable 3D printing
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            {founders.map((founder, index) => (
-              <div
-                key={index}
-                className="group"
-                style={{
-                  transform: `translateY(${Math.sin((scrollY + index * 100) / 100) * 8}px)`,
-                }}
-              >
-                <div className="relative mb-8 overflow-hidden">
-                  <div className="relative h-96 overflow-hidden rounded-3xl border-4 border-purple-200 group-hover:border-purple-600 transition-all duration-300 shadow-xl group-hover:shadow-2xl group-hover:shadow-purple-300">
-                    <Image
-                      src={founder.image || "/placeholder.svg"}
-                      alt={founder.name ?? "Founder photo"}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                      <p className="text-white text-sm leading-relaxed">{founder.description}</p>
-                    </div>
-
-                    {/* Floating badge */}
-                    <div className="absolute top-4 right-4 px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-75">
-                      {(founder.position ?? "").split("&")[0].trim()}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-6 bg-white rounded-2xl border-2 border-purple-100 group-hover:border-purple-400 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-purple-200 hover:-translate-y-2">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-1">{founder.name}</h3>
-                  <p className="text-purple-600 font-semibold mb-1 text-sm uppercase tracking-wide">
-                    {founder.position}
-                  </p>
-                  <p className="text-gray-600 mb-6 text-sm leading-relaxed">{founder.specialization}</p>
-
-                  {/* Know More Button with enhanced styling */}
-                  <a
-                    href={founder.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-300 transition-all duration-300 group/btn hover:scale-105"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                    <span>Know More</span>
-                    <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition" />
-                  </a>
-                </div>
-              </div>
             ))}
           </div>
         </div>
